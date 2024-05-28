@@ -1,0 +1,28 @@
+---
+- name: Find all config files
+  ansible.builtin.find:
+    paths: "{{ ansible_parent_role_paths[-1] }}/files"
+    recurse: true
+    hidden: true
+  register: find
+
+- name: Create parent directory
+  ansible.builtin.file:
+    path: "{{ dst }}"
+    state: directory
+    mode: '0755'
+
+- name: Create all child directories
+  ansible.builtin.file:
+    path: "{{ dst }}/{{ item.path | regex_replace('^' + ansible_parent_role_paths[-1] + '/files/', '') | dirname }}"
+    state: directory
+    mode: '0755'
+  loop: "{{ find.files }}"
+
+- name: Create symlink for all config files
+  ansible.builtin.file:
+    src: "{{ item.path }}"
+    path: "{{ dst }}/{{ item.path | regex_replace('^' + ansible_parent_role_paths[-1] + '/files/', '') }}"
+    state: link
+    force: true
+  loop: "{{ find.files }}"

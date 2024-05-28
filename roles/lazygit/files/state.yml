@@ -1,0 +1,23 @@
+lastupdatecheck: 0
+recentrepos:
+    - /data/data/com.termux/files/home/dotfiles
+    - /data/data/com.termux/files/home/.dotfiles
+    - /data/data/com.termux/files/home/documents/tur
+    - /data/data/com.termux/files/home/documents/adira/deployment-application/dev
+    - /data/data/com.termux/files/home/.config/kube
+    - /data/data/com.termux/files/home/documents/adira/deployment-application/prod
+    - /data/data/com.termux/files/home/documents/adira/MapR-Rule-Dedupe
+    - /data/data/com.termux/files/home/documents/resume
+    - /data/data/com.termux/files/home/.config/tmux/plugins/tmux-continuum
+    - /data/data/com.termux/files/home/.local/share/pass
+startuppopupversion: 5
+lastversion: 0.42.0
+customcommandshistory:
+    - q
+hidecommandlog: false
+ignorewhitespaceindiffview: false
+diffcontextsize: 3
+localbranchsortorder: recency
+remotebranchsortorder: alphabetical
+gitlogorder: topo-order
+gitlogshowgraph: when-maximised

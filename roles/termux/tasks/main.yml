@@ -1,0 +1,6 @@
+---
+- name: symlink termux config file
+  ansible.builtin.include_role:
+    name: symlink
+  vars:
+    dst: "{{ ansible_env.HOME }}/.termux"

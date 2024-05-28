@@ -1,0 +1,26 @@
+---
+- name: set user config
+  ansible.builtin.git_config:
+    scope: global
+    state: present
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+  loop:
+    - { name: 'user.email', value: 'admin@idjo.cc' }
+    - { name: 'user.name', value: 'Adrianus Vian Habirowo' }
+    - { name: 'user.signingkey', value: 'admin@idjo.cc' }
+
+- name: set other config
+  ansible.builtin.git_config:
+    scope: global
+    state: present
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+  loop:
+    - { name: 'core.editor', value: 'nvim' }
+    - { name: 'core.pager', value: 'nvim +Man!' }
+    - { name: 'init.defaultBranch', value: 'master' }
+    - { name: 'pull.rebase', value: 'false' }
+    - { name: 'push.autoSetupRemote', value: 'true' }
+    - { name: 'gpg.program', value: 'gpg' }
+    - { name: 'commit.gpgsign', value: 'false' }

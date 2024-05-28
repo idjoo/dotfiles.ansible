@@ -1,0 +1,55 @@
+---
+- name: btop
+  tags: btop
+  ansible.builtin.import_role:
+    name: btop
+
+- name: dunst
+  tags: dunst
+  ansible.builtin.import_role:
+    name: dunst
+
+- name: flameshot
+  tags: flameshot
+  ansible.builtin.import_role:
+    name: flameshot
+
+- name: herbstluftwm
+  tags: herbstluftwm
+  ansible.builtin.import_role:
+    name: herbstluftwm
+
+- name: kubie
+  tags: kubie
+  ansible.builtin.import_role:
+    name: kubie
+
+- name: mpv
+  tags: mpv
+  ansible.builtin.import_role:
+    name: mpv
+
+- name: picom
+  tags: picom
+  ansible.builtin.import_role:
+    name: picom
+
+- name: polybar
+  tags: polybar
+  ansible.builtin.import_role:
+    name: polybar
+
+- name: rofi
+  tags: rofi
+  ansible.builtin.import_role:
+    name: rofi
+
+- name: wezterm
+  tags: wezterm
+  ansible.builtin.import_role:
+    name: wezterm
+
+- name: yay
+  tags: yay
+  ansible.builtin.import_role:
+    name: yay

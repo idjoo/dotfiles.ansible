@@ -1,0 +1,64 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# history
+HISTFILE=~/.config/zsh/zsh_history
+HISTSIZE=999999999
+SAVEHIST=999999999
+setopt append_history
+setopt inc_append_history
+setopt hist_ignore_all_dups
+
+# completion
+zinit fpath -f "$XDG_DATA_HOME"/zsh/site-functions
+autoload -Uz compinit; compinit
+autoload -Uz bashcompinit; bashcompinit
+zinit cdreplay -q
+
+zstyle ':completion:*' menu select
+
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "${XDG_CACHE_HOME}"/zsh
+
+zstyle ':completion:*:(all-|)files' ignored-patterns '(|*/)CVS'
+zstyle ':completion:*:cd:*' ignored-patterns '(*/)#CVS'
+
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+
+zstyle ':completion:*:functions' ignored-patterns '_*'
+
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:kill:*'   force-list always
+
+zstyle ':completion:*' squeeze-slashes true
+
+zstyle ':completion:*:cd:*' ignore-parents parent pwd
+
+zmodload zsh/complist
+
+# key binding
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+[[ ! -f ~/.config/zsh/p10k.zsh ]] || source ~/.config/zsh/p10k.zsh
+
+if command -v keychain 1>/dev/null 2>/dev/null; then
+	mkdir -p "$XDG_RUNTIME_DIR"/keychain
+	eval $(keychain --eval --quiet --agents ssh admin@idjo.cc.pem v.adrianus.habirowo@adira.co.id.pem jenkins.dev@adira.co.id.pem)
+fi
+
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+! command -v pyenv >/dev/null || eval "$(pyenv init -)"
+
+eval "$(zoxide init zsh)"

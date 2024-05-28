@@ -1,0 +1,6 @@
+# code: language=ini
+# vim: syntax=dosini
+
+# become_same_user.yml
+bsu-joe ansible_user=joe
+

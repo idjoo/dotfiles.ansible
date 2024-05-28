@@ -1,0 +1,22 @@
+---
+- name: Set architecture based on ansible_architecture
+  set_fact:
+    gcloud_architecture: "{{ 'arm' if ansible_architecture == 'aarch64' else 'x86_64' }}"
+
+- name: install gcloud
+  ansible.builtin.include_role:
+    name: ansible.install-gcloud
+  vars:
+    gcloud_archive_name: "google-cloud-cli-{{ gcloud_version }}-linux-{{ gcloud_architecture }}.tar.gz"
+    gcloud_command_completion: false
+    gcloud_force_download: false
+    gcloud_install_path: "{{ ansible_env.HOME }}/.local/share"
+    gcloud_tmp_path: "{{ ansible_env.PREFIX }}/tmp/install_gcloud"
+    gcloud_update_path: false
+    gcloud_additional_components: []
+
+- name: symlink gcloud config file
+  ansible.builtin.include_role:
+    name: symlink
+  vars:
+    dst: "{{ ansible_env.HOME }}/.config/gcloud"

@@ -1,0 +1,5 @@
+---
+- name: termux
+  tags: termux
+  ansible.builtin.import_role:
+    name: termux

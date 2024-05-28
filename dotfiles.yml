@@ -1,0 +1,66 @@
+---
+- hosts: localhost
+  gather_facts: true
+  become: false
+  tasks:
+    - name: Get system details
+      ansible.builtin.debug:
+        msg: "{{ item }}"
+      with_items: 
+        - "{{ ansible_distribution }}"
+        - "{{ ansible_distribution_version }}"
+        - "{{ ansible_distribution_major_version }}"
+
+    - name: Run Arch Linux only tasks
+      tags: archlinux
+      ansible.builtin.include_tasks:
+        file: tasks/arch.yml
+      when: ansible_distribution == "ArchLinux"
+
+    - name: Run Termux only tasks
+      tags: termux
+      ansible.builtin.include_tasks:
+        file: tasks/termux.yml
+      when: ansible_distribution == "OtherLinux"
+
+    - name: gcloud
+      tags: gcloud
+      ansible.builtin.import_role:
+        name: gcloud
+      vars:
+        gcloud_version: 477.0.0
+
+    - name: git
+      tags: git
+      ansible.builtin.import_role:
+        name: git
+
+    - name: lazygit
+      tags: lazygit
+      ansible.builtin.import_role:
+        name: lazygit
+
+    - name: neofetch
+      tags: neofetch
+      ansible.builtin.import_role:
+        name: neofetch
+
+    - name: neovim
+      tags: nvim
+      ansible.builtin.import_role:
+        name: nvim
+
+    - name: stern
+      tags: stern
+      ansible.builtin.import_role:
+        name: stern
+
+    - name: tmux
+      tags: tmux
+      ansible.builtin.import_role:
+        name: tmux
+
+    - name: zsh
+      tags: zsh
+      ansible.builtin.import_role:
+        name: zsh

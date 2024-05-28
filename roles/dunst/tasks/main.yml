@@ -1,0 +1,16 @@
+---
+- name: install dunst
+  community.general.pacman:
+    executable: pacman
+    reason: explicit
+    reason_for: all
+    state: latest
+    update_cache: true
+    name:
+      - dunst
+
+- name: symlink dunst config file
+  ansible.builtin.include_role:
+    name: symlink
+  vars:
+    dst: "{{ ansible_env.HOME }}/.config/dunst"

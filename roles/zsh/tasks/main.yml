@@ -1,0 +1,33 @@
+---
+- name: install zsh
+  community.general.pacman:
+    executable: pacman
+    reason: explicit
+    reason_for: all
+    state: latest
+    update_cache: true
+    name:
+      - zsh
+
+- name: symlink zsh config file
+  ansible.builtin.include_role:
+    name: symlink
+  vars:
+    dst: "{{ ansible_env.HOME }}/.config/zsh"
+
+- name: set ZDOTDIR in /etc/zshrc if not already set (Archlinux)
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/zshrc
+    line: 'export ZDOTDIR=~/.config/zsh'
+    regexp: '^export ZDOTDIR='
+    state: present
+  when: (lookup('env', 'ZDOTDIR', default='') == '') and (ansible_distribution == "Archlinux")
+
+- name: set ZDOTDIR in /etc/zshrc if not already set (Termux)
+  ansible.builtin.lineinfile:
+    path: $PREFIX/etc/zshrc
+    line: 'export ZDOTDIR=~/.config/zsh'
+    regexp: '^export ZDOTDIR='
+    state: present
+  when: (lookup('env', 'ZDOTDIR', default='') == '') and (ansible_distribution == "OtherLinux")
